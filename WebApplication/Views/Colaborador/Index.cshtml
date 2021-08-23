@@ -51,3 +51,22 @@
         }
     </tbody>
 </table>
+@{
+    int paginaAtual = ViewBag.paginaAtual;
+    int proximaPagina = paginaAtual + 1;
+    int paginaAnterior = paginaAtual - 1;
+    var prevDisabled = paginaAtual <= 1 ? "disabled" : "";
+    var nextDisabled = ViewBag.ultimoDado == 0 ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-id="@paginaAnterior"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-id="@proximaPagina"
+   asp-page-=""
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

@@ -16,9 +16,9 @@ namespace WebApplication.Controllers {
             _httpClient = new HttpClient();
         }
         // GET: Colaborador
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index(int id = 1) {
             List<Colaborador> colaboradores = new();
-            HttpResponseMessage Res = await GerarHttpClient().GetAsync("colaborador");
+            HttpResponseMessage Res = await GerarHttpClient().GetAsync($"colaborador/pagina/{id}");
 
             if (Res.IsSuccessStatusCode) {
                 var EmpResponse = Res.Content.ReadAsStringAsync().Result;
@@ -33,7 +33,8 @@ namespace WebApplication.Controllers {
                 item.DiasParaAniversario = (nextBirthday - DateTime.Today).Days;
             }
 
-
+            ViewBag.paginaAtual = id;
+            ViewBag.ultimoDado = colaboradores.Count;
             return View(colaboradores);
         }
 

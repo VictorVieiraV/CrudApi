@@ -17,11 +17,14 @@ namespace CrudApi.Controllers {
         }
 
         // GET: api/Colaborador
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Colaborador>>> GetColaborador() {
+        [HttpGet("pagina/{id}")]
+        public async Task<ActionResult<IEnumerable<Colaborador>>> GetColaborador(int id) {
+            int itensPorPagina = 2;
             return await _context.Colaborador
                 .OrderBy(a => a.Nome)
                 .ThenBy(b => b.Cpf)
+                .Skip((id - 1) * itensPorPagina)
+                .Take(itensPorPagina)
                 .ToListAsync();
         }
 
